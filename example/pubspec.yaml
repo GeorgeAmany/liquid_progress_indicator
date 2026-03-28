@@ -1,5 +1,6 @@
 name: liquid_progress_indicator_example
 description: Example app for liquid_progress_indicator.
+# Not published on pub.dev. Publish the parent package: cd .. && dart pub publish
 publish_to: none
 version: 1.0.0
 

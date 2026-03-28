@@ -25,5 +25,7 @@ flutter:
 
 topics:
   - animation
+  - effects
+  - progress
   - ui
   - widget
