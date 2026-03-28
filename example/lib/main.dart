@@ -70,14 +70,14 @@ class _DemoPageState extends State<DemoPage> {
   int _snapchatReach = 27;
 
   List<SocialReachItem> get _reachItems => buildSocialReachItems(
-        reachByPlatformKey: {
-          'instagram': _instagramReach.clamp(0, 100),
-          'tiktok': _tiktokReach.clamp(0, 100),
-          'facebook': _facebookReach.clamp(0, 100),
-          'snapchat': _snapchatReach.clamp(0, 100),
-        },
-        configByPlatformKey: _configByKey,
-      );
+    reachByPlatformKey: {
+      'instagram': _instagramReach.clamp(0, 100),
+      'tiktok': _tiktokReach.clamp(0, 100),
+      'facebook': _facebookReach.clamp(0, 100),
+      'snapchat': _snapchatReach.clamp(0, 100),
+    },
+    configByPlatformKey: _configByKey,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -98,9 +98,9 @@ class _DemoPageState extends State<DemoPage> {
               title: Text(
                 'Adjust values',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               childrenPadding: const EdgeInsets.only(bottom: 8),
               children: [
