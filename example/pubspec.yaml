@@ -1,0 +1,20 @@
+name: liquid_progress_indicator_example
+description: Example app for liquid_progress_indicator.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  liquid_progress_indicator:
+    path: ../
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
