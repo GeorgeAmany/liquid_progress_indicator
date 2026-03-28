@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'models/social_reach_item.dart';
 import 'social_media_pill.dart';
 
+/// Centered row of [SocialMediaPill]s for items with [SocialReachItem.reach] &gt; 0.
 class SocialMediaFeed extends StatelessWidget {
   const SocialMediaFeed({
     super.key,

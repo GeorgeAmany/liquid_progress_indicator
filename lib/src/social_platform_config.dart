@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'models/social_reach_item.dart';
 
+/// Static label, icon, and gradient for a platform key (used with [buildSocialReachItems]).
 class SocialPlatformConfig {
   const SocialPlatformConfig({
     required this.label,
@@ -14,6 +15,7 @@ class SocialPlatformConfig {
   final LinearGradient gradient;
 }
 
+/// Merges [reachByPlatformKey] with [configByPlatformKey]. Unknown keys are skipped.
 List<SocialReachItem> buildSocialReachItems({
   required Map<String, int> reachByPlatformKey,
   required Map<String, SocialPlatformConfig> configByPlatformKey,

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+/// Layout, shadows, and animation timing for [SocialMediaPill].
 class SocialMediaPillStyle {
   const SocialMediaPillStyle({
     this.width = 72,
@@ -21,6 +22,7 @@ class SocialMediaPillStyle {
     this.percentTextColor = const Color(0xDE000000),
     this.waveDuration = const Duration(milliseconds: 1600),
     this.percentTweenDuration = const Duration(milliseconds: 800),
+    this.centerPercentText = false,
   });
 
   final double width;
@@ -41,6 +43,9 @@ class SocialMediaPillStyle {
   final Duration waveDuration;
   final Duration percentTweenDuration;
 
+  /// Centers the percent label horizontally (e.g. tall narrow pills).
+  final bool centerPercentText;
+
   SocialMediaPillStyle copyWith({
     double? width,
     double? height,
@@ -59,6 +64,7 @@ class SocialMediaPillStyle {
     Color? percentTextColor,
     Duration? waveDuration,
     Duration? percentTweenDuration,
+    bool? centerPercentText,
   }) {
     return SocialMediaPillStyle(
       width: width ?? this.width,
@@ -78,11 +84,12 @@ class SocialMediaPillStyle {
       percentTextColor: percentTextColor ?? this.percentTextColor,
       waveDuration: waveDuration ?? this.waveDuration,
       percentTweenDuration: percentTweenDuration ?? this.percentTweenDuration,
+      centerPercentText: centerPercentText ?? this.centerPercentText,
     );
   }
 }
 
-/// Animated “liquid” card with a sine wave fill driven by [progress].
+/// Card with animated sine-wave liquid fill for [progress] (0.0–1.0).
 class SocialMediaPill extends StatefulWidget {
   const SocialMediaPill({
     super.key,
@@ -93,7 +100,6 @@ class SocialMediaPill extends StatefulWidget {
     this.style = const SocialMediaPillStyle(),
   });
 
-  /// Fill level from 0.0 to 1.0.
   final double progress;
   final Widget icon;
   final LinearGradient gradient;
@@ -185,8 +191,8 @@ class _SocialMediaPillState extends State<SocialMediaPill>
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.white.withOpacity(0.9),
-                        Colors.white.withOpacity(0.0),
+                        Colors.white.withValues(alpha: 0.9),
+                        Colors.white.withValues(alpha: 0.0),
                       ],
                       stops: const [0, 0.35],
                     ),
@@ -203,25 +209,48 @@ class _SocialMediaPillState extends State<SocialMediaPill>
                 child: widget.icon,
               ),
             ),
-            Positioned(
-              left: s.percentLeft,
-              bottom: s.percentBottom,
-              child: TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0, end: p),
-                duration: s.percentTweenDuration,
-                curve: Curves.easeOutCubic,
-                builder: (context, value, child) {
-                  return Text(
-                    '${(value * 100).round()}%',
-                    style: TextStyle(
-                      fontSize: s.percentFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: s.percentTextColor,
-                    ),
-                  );
-                },
+            if (s.centerPercentText)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: s.percentBottom,
+                child: TweenAnimationBuilder<double>(
+                  tween: Tween<double>(begin: 0, end: p),
+                  duration: s.percentTweenDuration,
+                  curve: Curves.easeOutCubic,
+                  builder: (context, value, child) {
+                    return Text(
+                      '${(value * 100).round()}%',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: s.percentFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: s.percentTextColor,
+                      ),
+                    );
+                  },
+                ),
+              )
+            else
+              Positioned(
+                left: s.percentLeft,
+                bottom: s.percentBottom,
+                child: TweenAnimationBuilder<double>(
+                  tween: Tween<double>(begin: 0, end: p),
+                  duration: s.percentTweenDuration,
+                  curve: Curves.easeOutCubic,
+                  builder: (context, value, child) {
+                    return Text(
+                      '${(value * 100).round()}%',
+                      style: TextStyle(
+                        fontSize: s.percentFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: s.percentTextColor,
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
           ],
         ),
       ),

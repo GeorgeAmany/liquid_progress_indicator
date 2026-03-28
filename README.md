@@ -7,6 +7,16 @@ Animated liquid-style wave fill inside compact cards. Use **`SocialMediaFeed`** 
 
 ---
 
+## Preview
+
+<p align="center">
+  <img src="doc/demo.gif" alt="Animated demo: liquid wave pills and sliders" width="300"/>
+</p>
+
+Recorded from the **`example/`** app (see **[doc/record_demo.md](doc/record_demo.md)**). Save the file as **`doc/demo.gif`** (with a **slash**, not `doc:demo.gif`) so GitHub and pub.dev resolve the image.
+
+---
+
 ## Features
 
 - **Wave animation** — continuous sine-wave surface with a soft second layer
@@ -23,7 +33,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  liquid_progress_indicator: ^0.1.0
+  liquid_progress_indicator: ^0.1.2
 ```
 
 Then:
@@ -42,8 +52,8 @@ flutter pub get
 import 'package:flutter/material.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
-class DashboardSnippet extends StatelessWidget {
-  const DashboardSnippet({super.key});
+class ReachRowSnippet extends StatelessWidget {
+  const ReachRowSnippet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +178,7 @@ SocialMediaFeed(
 | `SocialReachItem` | `label`, `icon`, `gradient`, `reach` (int, typically 0–100) |
 | `SocialPlatformConfig` | Same as item minus `reach`; used with `buildSocialReachItems` |
 | `buildSocialReachItems` | `Map<String,int>` + `Map<String,SocialPlatformConfig>` → `List<SocialReachItem>` |
-| `SocialMediaPillStyle` | Layout, colors, shadow, animation durations |
+| `SocialMediaPillStyle` | Layout, colors, shadow, animation durations; `centerPercentText` centers the % on tall pills |
 
 For full signatures, run **`dart doc`** in the package root or open the **API reference** tab on [pub.dev](https://pub.dev/packages/liquid_progress_indicator) after publishing.
 
@@ -186,9 +196,14 @@ flutter run
 
 It demonstrates:
 
-- a **feed** built with `buildSocialReachItems`
-- **sliders** that update reach / progress live
-- a **standalone** `SocialMediaPill` with custom `SocialMediaPillStyle`
+- a minimal **white** screen: title, **Social Media Reach** row (defaults **62 / 38 / 68 / 30**), SVG icons + gradients in `agency_branding.dart`
+- an **Adjust values** panel (teal sliders) to change each platform for recordings or GIFs
+
+---
+
+## Acknowledgments
+
+This package was shaped with real teamwork: **Abdlrahman Ibrahem**, our tech lead, helped guide the API direction, quality bar, and how the widgets should feel in production apps. **Mohameed Saleh** contributed alongside that effort—pairing on behavior, polish, and making sure the pieces work well together. Thank you both for collaborating on **liquid_progress_indicator** and helping ship something the community can reuse with confidence.
 
 ---
 

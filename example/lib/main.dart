@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
-void main() {
-  runApp(const LiquidProgressIndicatorExampleApp());
-}
+import 'agency_branding.dart';
+
+void main() => runApp(const LiquidProgressIndicatorExampleApp());
 
 class LiquidProgressIndicatorExampleApp extends StatelessWidget {
   const LiquidProgressIndicatorExampleApp({super.key});
@@ -11,11 +11,22 @@ class LiquidProgressIndicatorExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'liquid_progress_indicator',
+      title: 'liquid_progress_indicator example',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6750A4)),
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF00897B),
+          brightness: Brightness.light,
+        ),
+        sliderTheme: SliderThemeData(
+          overlayShape: SliderComponentShape.noOverlay,
+          trackHeight: 4,
+          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
+          activeTrackColor: const Color(0xFF00695C),
+          inactiveTrackColor: const Color(0xFFB2DFDB),
+          thumbColor: const Color(0xFF00897B),
+        ),
       ),
       home: const DemoPage(),
     );
@@ -30,157 +41,168 @@ class DemoPage extends StatefulWidget {
 }
 
 class _DemoPageState extends State<DemoPage> {
-  /// Drives the feed’s Instagram column (0–100).
-  double _instagramReach = 72;
+  int _instagramReach = 62;
+  int _tiktokReach = 38;
+  int _facebookReach = 68;
+  int _snapchatReach = 30;
 
-  /// Standalone pill progress (0.0–1.0).
-  double _singleProgress = 0.62;
+  static const SocialMediaPillStyle _pillStyle = SocialMediaPillStyle(
+    width: 74,
+    height: 124,
+    outerBorderRadius: 20,
+    innerBorderRadius: 16,
+    iconTop: 14,
+    iconHorizontalInset: 10,
+    iconHeight: 28,
+    percentBottom: 12,
+    percentFontSize: 15,
+    shadowBlur: 12,
+    shadowOffset: Offset(0, 6),
+    shadowColor: Color(0x1A000000),
+    centerPercentText: true,
+  );
 
-  static final Map<String, SocialPlatformConfig> _platformUi = {
-    'instagram': SocialPlatformConfig(
-      label: 'Instagram',
-      icon: Icon(Icons.camera_alt, color: Colors.white, size: 22),
-      gradient: LinearGradient(
-        colors: [
-          Color(0xFFF58529),
-          Color(0xFFDD2A7B),
-          Color(0xFF8134AF),
-        ],
-      ),
-    ),
-    'tiktok': SocialPlatformConfig(
-      label: 'TikTok',
-      icon: Icon(Icons.music_note, color: Colors.white, size: 22),
-      gradient: LinearGradient(
-        colors: [Color(0xFF00F2EA), Color(0xFFFF0050)],
-      ),
-    ),
-    'facebook': SocialPlatformConfig(
-      label: 'Facebook',
-      icon: Icon(Icons.facebook, color: Colors.white, size: 22),
-      gradient: LinearGradient(
-        colors: [Color(0xFF1877F2), Color(0xFF0C63D4)],
-      ),
-    ),
-    'snapchat': SocialPlatformConfig(
-      label: 'Snapchat',
-      icon: Icon(Icons.circle, color: Colors.white, size: 22),
-      gradient: LinearGradient(
-        colors: [Color(0xFFFFFC00), Color(0xFFFF9000)],
-      ),
-    ),
-  };
-
-  Map<String, int> get _reachMap => {
-        'instagram': _instagramReach.round().clamp(0, 100),
-        'tiktok': 45,
-        'facebook': 88,
-        'snapchat': 0,
-      };
+  List<SocialReachItem> get _socialItems => [
+        SocialReachItem(
+          label: 'Instagram',
+          reach: _instagramReach.clamp(0, 100),
+          icon: AgencyAssets.reachSvg(AgencyAssets.instagramReach),
+          gradient: AgencyColors.instagramGradient,
+        ),
+        SocialReachItem(
+          label: 'TikTok',
+          reach: _tiktokReach.clamp(0, 100),
+          icon: AgencyAssets.reachSvg(AgencyAssets.tiktokReach),
+          gradient: AgencyColors.tiktokGradient,
+        ),
+        SocialReachItem(
+          label: 'Facebook',
+          reach: _facebookReach.clamp(0, 100),
+          icon: AgencyAssets.reachSvg(AgencyAssets.facebookReach),
+          gradient: AgencyColors.facebookGradient,
+        ),
+        SocialReachItem(
+          label: 'Snapchat',
+          reach: _snapchatReach.clamp(0, 100),
+          icon: AgencyAssets.reachSvg(AgencyAssets.snapchatReach),
+          gradient: AgencyColors.snapchatGradient,
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
-    final feedItems = buildSocialReachItems(
-      reachByPlatformKey: _reachMap,
-      configByPlatformKey: _platformUi,
-    );
+    final theme = Theme.of(context);
+    final visible = _socialItems.where((e) => e.reach > 0).toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('liquid_progress_indicator example'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
-        children: [
-          Text(
-            'Package demo',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Use sliders to see live updates. Snapchat has reach 0 and stays hidden.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-          ),
-          const SizedBox(height: 24),
-          _SectionTitle(context, 'SocialMediaFeed + buildSocialReachItems'),
-          const SizedBox(height: 8),
-          Card(
-            margin: EdgeInsets.zero,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: SocialMediaFeed(items: feedItems),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Instagram reach (feed)',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          Slider(
-            value: _instagramReach,
-            min: 0,
-            max: 100,
-            divisions: 100,
-            label: '${_instagramReach.round()}%',
-            onChanged: (v) => setState(() => _instagramReach = v),
-          ),
-          const SizedBox(height: 32),
-          _SectionTitle(context, 'SocialMediaPill (single)'),
-          const SizedBox(height: 8),
-          Card(
-            margin: EdgeInsets.zero,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: SocialMediaPill(
-                  progress: _singleProgress,
-                  label: 'Hydration',
-                  icon: const Icon(Icons.water_drop, color: Colors.white),
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF4FC3F7), Color(0xFF0288D1)],
-                  ),
-                  style: const SocialMediaPillStyle(
-                    width: 88,
-                    height: 64,
-                  ),
-                ),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+          children: [
+            Text(
+              'Liquid Progress Indicator',
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w800,
+                letterSpacing: -0.3,
               ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Progress 0.0–1.0',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          Slider(
-            value: _singleProgress,
-            min: 0,
-            max: 1,
-            divisions: 100,
-            label: '${(_singleProgress * 100).round()}%',
-            onChanged: (v) => setState(() => _singleProgress = v),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            'See the package README on pub.dev for copy-paste snippets and API table.',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.outline,
+            const SizedBox(height: 8),
+            Text(
+              'Social Media Reach',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                for (var i = 0; i < visible.length; i++) ...[
+                  if (i > 0) const SizedBox(width: 6),
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.topCenter,
+                      child: SocialMediaPill(
+                        progress: (visible[i].reach / 100).clamp(0.0, 1.0),
+                        icon: visible[i].icon,
+                        gradient: visible[i].gradient,
+                        label: visible[i].label,
+                        style: _pillStyle,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+            const SizedBox(height: 24),
+            ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              title: Text(
+                'Adjust values (for GIF / testing)',
+                style: theme.textTheme.titleSmall?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.w600,
                 ),
-          ),
-        ],
+              ),
+              childrenPadding: const EdgeInsets.only(bottom: 8),
+              children: [
+                _ReachSlider(
+                  label: 'Instagram',
+                  value: _instagramReach,
+                  onChanged: (v) => setState(() => _instagramReach = v),
+                ),
+                _ReachSlider(
+                  label: 'TikTok',
+                  value: _tiktokReach,
+                  onChanged: (v) => setState(() => _tiktokReach = v),
+                ),
+                _ReachSlider(
+                  label: 'Facebook',
+                  value: _facebookReach,
+                  onChanged: (v) => setState(() => _facebookReach = v),
+                ),
+                _ReachSlider(
+                  label: 'Snapchat',
+                  value: _snapchatReach,
+                  onChanged: (v) => setState(() => _snapchatReach = v),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-Widget _SectionTitle(BuildContext context, String text) {
-  return Text(
-    text,
-    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.w600,
+class _ReachSlider extends StatelessWidget {
+  const _ReachSlider({
+    required this.label,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String label;
+  final int value;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text('$label · $value%'),
+        Slider(
+          value: value.toDouble(),
+          min: 0,
+          max: 100,
+          divisions: 100,
+          label: '$value%',
+          onChanged: (v) => onChanged(v.round()),
         ),
-  );
+      ],
+    );
+  }
 }
