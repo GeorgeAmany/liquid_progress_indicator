@@ -13,8 +13,6 @@ Animated liquid-style wave fill inside compact cards. Use **`SocialMediaFeed`** 
   <img src="doc/demo.gif" alt="Animated demo: liquid wave pills and sliders" width="300"/>
 </p>
 
-Recorded from the **`example/`** app (see **[doc/record_demo.md](doc/record_demo.md)**). Save the file as **`doc/demo.gif`** (with a **slash**, not `doc:demo.gif`) so GitHub and pub.dev resolve the image.
-
 ---
 
 ## Features
