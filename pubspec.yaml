@@ -2,7 +2,7 @@ name: liquid_wave_indicator
 description: >-
   Animated liquid wave fill for any 0–100% (or 0.0–1.0) metric: goals, storage,
   skills, health, social reach, etc. Row helpers + tall dashboard section. Pure Flutter.
-version: 0.2.1
+version: 0.2.2
 homepage: https://github.com/GeorgeAmany/liquid_wave_indicator
 repository: https://github.com/GeorgeAmany/liquid_wave_indicator
 issue_tracker: https://github.com/GeorgeAmany/liquid_wave_indicator/issues

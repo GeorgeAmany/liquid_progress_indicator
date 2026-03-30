@@ -1,3 +1,7 @@
+## 0.2.2
+
+* Doc-only: bump version to re-run pub.dev scoring with the updated DartDoc/`CHANGELOG.md` content.
+
 ## 0.2.1
 
 * Doc-only: added DartDoc comments to the exported public API to improve pub.dev “Provide documentation” scoring.
