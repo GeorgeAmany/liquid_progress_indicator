@@ -2,7 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+/// Layout and animation parameters for [SocialMediaPill].
 class SocialMediaPillStyle {
+  /// Creates a [SocialMediaPillStyle].
   const SocialMediaPillStyle({
     this.width = 72,
     this.height = 56,
@@ -24,26 +26,61 @@ class SocialMediaPillStyle {
     this.centerPercentText = false,
   });
 
+  /// Width of the pill widget in logical pixels.
   final double width;
+
+  /// Height of the pill widget in logical pixels.
   final double height;
+
+  /// Radius for the outer pill border.
   final double outerBorderRadius;
+
+  /// Radius for the inner (animated wave) border.
   final double innerBorderRadius;
+
+  /// Blur applied to the pill drop shadow.
   final double shadowBlur;
+
+  /// Offset applied to the pill drop shadow.
   final Offset shadowOffset;
+
+  /// Color of the pill drop shadow.
   final Color shadowColor;
+
+  /// Optional background fill color. If null, a light gray is used.
   final Color? backgroundColor;
+
+  /// Distance from the pill top to the icon.
   final double iconTop;
+
+  /// Horizontal inset for the icon container.
   final double iconHorizontalInset;
+
+  /// Icon container height.
   final double iconHeight;
+
+  /// Left inset for the percent text when [centerPercentText] is false.
   final double percentLeft;
+
+  /// Distance from the bottom to the percent text.
   final double percentBottom;
+
+  /// Font size for the percent text.
   final double percentFontSize;
+
+  /// Text color for the percent label.
   final Color percentTextColor;
+
+  /// Total duration of the looping wave animation.
   final Duration waveDuration;
+
+  /// Duration used for tweening the displayed percent value.
   final Duration percentTweenDuration;
 
+  /// Whether the percent text is centered at the bottom of the pill.
   final bool centerPercentText;
 
+  /// Returns a copy of this style with the provided fields replaced.
   SocialMediaPillStyle copyWith({
     double? width,
     double? height,
@@ -86,6 +123,7 @@ class SocialMediaPillStyle {
     );
   }
 
+  /// Tall preset intended for social reach dashboards.
   static const SocialMediaPillStyle socialReach = SocialMediaPillStyle(
     width: 74,
     height: 124,
@@ -103,7 +141,11 @@ class SocialMediaPillStyle {
   );
 }
 
+/// A pill-shaped animated progress indicator with a liquid wave fill.
 class SocialMediaPill extends StatefulWidget {
+  /// Creates a [SocialMediaPill].
+  ///
+  /// The [progress] value is expected to be in the range `0.0..1.0`.
   const SocialMediaPill({
     super.key,
     required this.progress,
@@ -113,13 +155,23 @@ class SocialMediaPill extends StatefulWidget {
     this.style = const SocialMediaPillStyle(),
   });
 
+  /// Progress value used to compute the wave fill (typically `0.0..1.0`).
   final double progress;
+
+  /// Widget rendered as the pill icon.
   final Widget icon;
+
+  /// Gradient painted inside the wave.
   final LinearGradient gradient;
+
+  /// Accessible label used by semantics and displayed as the percent context.
   final String label;
+
+  /// Style applied to layout and animation.
   final SocialMediaPillStyle style;
 
   @override
+  /// Creates the internal state for the animated wave.
   State<SocialMediaPill> createState() => _SocialMediaPillState();
 }
 

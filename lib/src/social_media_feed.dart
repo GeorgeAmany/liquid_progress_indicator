@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'models/social_reach_item.dart';
 import 'social_media_pill.dart';
 
+/// A centered row of [SocialMediaPill] widgets.
+///
+/// Each item is rendered with `progress = reach / 100`. Items with
+/// `reach <= 0` are omitted.
 class SocialMediaFeed extends StatelessWidget {
+  /// Creates a [SocialMediaFeed].
   const SocialMediaFeed({
     super.key,
     required this.items,
@@ -13,13 +18,23 @@ class SocialMediaFeed extends StatelessWidget {
     this.alignment = MainAxisAlignment.center,
   });
 
+  /// Items to render as pills.
   final List<SocialReachItem> items;
+
+  /// Padding around the entire row.
   final EdgeInsetsGeometry padding;
+
+  /// Horizontal spacing between pills.
   final double spacing;
+
+  /// Style used for each [SocialMediaPill].
   final SocialMediaPillStyle pillStyle;
+
+  /// Alignment applied to the row main axis.
   final MainAxisAlignment alignment;
 
   @override
+  /// Builds a horizontal row of visible pills.
   Widget build(BuildContext context) {
     final visible = items.where((e) => e.reach > 0).toList();
     if (visible.isEmpty) {

@@ -23,7 +23,7 @@ Liquid wave fill for percent metrics (0–100 in rows, 0.0–1.0 on a single pil
 
 ```yaml
 dependencies:
-  liquid_wave_indicator: ^0.2.0
+  liquid_wave_indicator: ^0.2.1
 ```
 
 ```bash

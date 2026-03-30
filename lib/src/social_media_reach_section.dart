@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'models/social_reach_item.dart';
 import 'social_media_pill.dart';
 
+/// A vertical section containing an optional heading, a title, and a row of
+/// [SocialMediaPill] widgets.
+///
+/// Like [SocialMediaFeed], items with `reach <= 0` are omitted. If all items
+/// are omitted, this widget returns an empty box.
 class SocialMediaReachSection extends StatelessWidget {
+  /// Creates a [SocialMediaReachSection].
   const SocialMediaReachSection({
     super.key,
     this.heading,
@@ -19,19 +25,41 @@ class SocialMediaReachSection extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.start,
   });
 
+  /// Optional heading displayed above [title].
   final String? heading;
+
+  /// Title displayed below [heading].
   final String title;
+
+  /// Items to render as pills.
   final List<SocialReachItem> items;
+
+  /// Padding applied to the section content.
   final EdgeInsetsGeometry padding;
+
+  /// Vertical spacing between [heading] and [title].
   final double headingSpacing;
+
+  /// Vertical spacing between [title] and the pill row.
   final double titleSpacing;
+
+  /// Horizontal spacing between pills in the row.
   final double rowSpacing;
+
+  /// Style used for each [SocialMediaPill].
   final SocialMediaPillStyle pillStyle;
+
+  /// Optional style override for the heading text.
   final TextStyle? headingStyle;
+
+  /// Optional style override for the title text.
   final TextStyle? titleStyle;
+
+  /// Cross axis alignment for the section's column.
   final CrossAxisAlignment crossAxisAlignment;
 
   @override
+  /// Builds the section UI.
   Widget build(BuildContext context) {
     final visible = items.where((e) => e.reach > 0).toList();
     if (visible.isEmpty) {
