@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Doc-only: added DartDoc comments to the exported public API to improve pub.dev “Provide documentation” scoring.
+
 ## 0.2.0
 
 * **Breaking:** Pub package **`liquid_wave_indicator`**. Import `package:liquid_wave_indicator/liquid_wave_indicator.dart`.
